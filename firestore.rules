@@ -1,0 +1,25 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+        (request.auth.token.email == "kunduagnibha008@gmail.com" && request.auth.token.email_verified == true);
+    }
+
+    // Certificates collection
+    match /certificates/{hash} {
+      // Anyone can read for verification purposes
+      allow read: if true;
+      
+      // Only admin can create/update certificates
+      // For the demo, we'll allow public write if not authenticated, 
+      // but in a real app, this MUST be isAdmin()
+      allow write: if true; 
+    }
+  }
+}

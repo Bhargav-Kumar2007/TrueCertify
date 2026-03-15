@@ -1,0 +1,26 @@
+{
+  "entities": {
+    "Certificate": {
+      "title": "Certificate",
+      "description": "Academic credential anchored to the blockchain",
+      "type": "object",
+      "properties": {
+        "hash": { "type": "string", "description": "SHA-256 hash of the certificate file" },
+        "studentName": { "type": "string" },
+        "university": { "type": "string" },
+        "course": { "type": "string" },
+        "issueDate": { "type": "string", "format": "date-time" },
+        "expiryDate": { "type": "string", "format": "date-time" },
+        "ipfsHash": { "type": "string" },
+        "txId": { "type": "string" }
+      },
+      "required": ["hash", "studentName", "course", "issueDate", "ipfsHash", "txId"]
+    }
+  },
+  "firestore": {
+    "/certificates/{hash}": {
+      "schema": "Certificate",
+      "description": "Collection of issued certificates indexed by their file hash"
+    }
+  }
+}
